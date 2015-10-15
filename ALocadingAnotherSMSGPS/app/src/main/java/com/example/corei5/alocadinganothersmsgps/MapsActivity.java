@@ -1,23 +1,53 @@
 package mapped.wolfox.com.alocadinganothersmsgps;
 
+import android.location.Location;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdate;
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 public class MapsActivity extends FragmentActivity {
 
     private GoogleMap mMap; // Might be null if Google Play services APK is not available.
+    private CameraUpdate mCamera;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
         setUpMapIfNeeded();
+
+        //Agrego un marcador
+        addMarker(mMap.getMyLocation());
+    }
+
+    // Metodo para agregar un marcador
+    public void addMarker(Location loc){
+        //Toast.makeText(this," loc: "+loc, Toast.LENGTH_SHORT);
+        if(loc == null){
+            //Toast.makeText(this," loc: es null", Toast.LENGTH_SHORT);
+            return;
+        }
+        LatLng position = new LatLng(loc.getLatitude(), loc.getLongitude());
+        String title ="Persona espiada";
+        String info ="Ubicacion de la persona espiada";
+        float color = BitmapDescriptorFactory.HUE_CYAN;
+        mMap.addMarker(new MarkerOptions()
+                        .position(position)     // Posicion del marcador
+                        .title(title)           // Agrega titulo al marcador
+                        .snippet(info)          // Agrega información detalle relacionada con el marcador
+                        .alpha(0.6f)         // Opacidad del icono
+                        //.anchor(dimension1, dimension2)     // Tamaño del icono (alto y ancho)
+                        //.icon(BitmapDescriptorFactory.fromResource(icon)));
+                        .icon(BitmapDescriptorFactory.defaultMarker(color))
+        );
     }
 
     @Override
@@ -61,6 +91,13 @@ public class MapsActivity extends FragmentActivity {
      * This should only be called once and when we are sure that {@link #mMap} is not null.
      */
     private void setUpMap() {
+        mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+
         mMap.addMarker(new MarkerOptions().position(new LatLng(0, 0)).title("Marker"));
+
+        //mCamera = CameraUpdateFactory.newLatLngZoom(new LatLng(40.070823, -2.13760), 14);
+        //mMap.animateCamera(mCamera);
+        mMap.setMyLocationEnabled(true);
+
     }
 }
