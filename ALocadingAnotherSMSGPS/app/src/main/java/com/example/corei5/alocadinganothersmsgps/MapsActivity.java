@@ -41,6 +41,8 @@ public class MapsActivity extends FragmentActivity {
         mMap.addMarker(new MarkerOptions()
     
 
+                        .position(position)     // Posicion del marcador
+       
 
 
     /**
