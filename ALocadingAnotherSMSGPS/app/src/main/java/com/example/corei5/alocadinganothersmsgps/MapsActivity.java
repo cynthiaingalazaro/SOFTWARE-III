@@ -23,7 +23,6 @@ public class MapsActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
         setUpMapIfNeeded();
-<<<<<<< HEAD
 
         //Agrego un marcador
         addMarker(mMap.getMyLocation());
@@ -50,29 +49,12 @@ public class MapsActivity extends FragmentActivity {
                         .icon(BitmapDescriptorFactory.defaultMarker(color))
         );
     }
-=======
->>>>>>> AgregarMarcadorMapa
 
-        //Agrego un marcador
-        addMarker(mMap.getMyLocation());
+    @Override
+    protected void onResume() {
+        super.onResume();
+        setUpMapIfNeeded();
     }
-// Metodo para agregar un marcador
-    public void addMarker(Location loc){
-        //Toast.makeText(this," loc: "+loc, Toast.LENGTH_SHORT);
-        if(loc == null){
-            //Toast.makeText(this," loc: es null", Toast.LENGTH_SHORT);
-            return;
-        }
-        LatLng position = new LatLng(loc.getLatitude(), loc.getLongitude());
-        String title ="Persona espiada";
-        String info ="Ubicacion de la persona espiada";
-        float color = BitmapDescriptorFactory.HUE_CYAN;
-        mMap.addMarker(new MarkerOptions()
-    
-
-                        .position(position)     // Posicion del marcador
-                        .title(title)           // Agrega titulo al marcador
-
 
     /**
      * Sets up the map if it is possible to do so (i.e., the Google Play services APK is correctly
