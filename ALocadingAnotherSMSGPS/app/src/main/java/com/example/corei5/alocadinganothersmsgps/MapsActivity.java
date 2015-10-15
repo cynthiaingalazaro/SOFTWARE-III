@@ -42,7 +42,7 @@ public class MapsActivity extends FragmentActivity {
     
 
                         .position(position)     // Posicion del marcador
-       
+                        .title(title)           // Agrega titulo al marcador
 
 
     /**
