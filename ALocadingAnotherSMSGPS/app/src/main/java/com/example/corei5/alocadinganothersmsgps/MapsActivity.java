@@ -3,6 +3,8 @@ package mapped.wolfox.com.alocadinganothersmsgps;
 import android.location.Location;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdate;
@@ -38,7 +40,7 @@ public class MapsActivity extends FragmentActivity {
         String info ="Ubicacion de la persona espiada";
         float color = BitmapDescriptorFactory.HUE_CYAN;
         int zoom = 14;
-        if(loc == null){
+        if(loc == null){//mejor mostrar ultima ubicacion conocida
             Toast.makeText(this," loc: es null", Toast.LENGTH_SHORT).show();
             position =  new LatLng( 0, 0);
             title = "ES UN NINJA";
@@ -64,10 +66,43 @@ public class MapsActivity extends FragmentActivity {
                             .icon(BitmapDescriptorFactory.defaultMarker(color))
         );
         //Camera
-        mCamera = CameraUpdateFactory.newLatLngZoom(position, 14);
+        mCamera = CameraUpdateFactory.newLatLngZoom(position, zoom);
         mMap.animateCamera(mCamera);
     }
 
+    // agregar un menu de opciones
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu){
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.options_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item){
+        //Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the home/up button, so long
+        // as you specify a parent activity in AndroidManiferst.xml.
+        // define items in menu/option_menu.xml
+        switch(item.getItemId()){
+            case R.id.MenuOption1:
+                //Enviar mensaje al otro celular Aqui
+                Toast.makeText(MapsActivity.this, "Opcion 1", Toast.LENGTH_LONG).show();
+                return true;
+            case R.id.MenuOption2:
+                Toast.makeText(MapsActivity.this, "Opcion 2", Toast.LENGTH_LONG).show();
+                return true;
+            case R.id.MenuOption3:
+                Toast.makeText(MapsActivity.this, "Opcion 3", Toast.LENGTH_LONG).show();
+                //finish();// Close app
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+
+        }
+    }
+
+    // Others methods
     @Override
     protected void onResume() {
         super.onResume();
@@ -109,7 +144,13 @@ public class MapsActivity extends FragmentActivity {
      * This should only be called once and when we are sure that {@link #mMap} is not null.
      */
     private void setUpMap() {
-        mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+        mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);//tipo de mapa a mostrar
+        /*
+        mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL); // Establecemos el mapa normal
+        mMap.setMapType(GoogleMap.MAP_TYPE_SATELLITE); // Establecemos el mapa satelite
+        mMap.setMapType(GoogleMap.MAP_TYPE_TERRAIN); // Establecemos el mapa terrestre
+        mMap.setMapType(GoogleMap.MAP_TYPE_HYBRID); // Establecemos el mapa hibrido
+        */
 
         //mMap.addMarker(new MarkerOptions().position(new LatLng(0, 0)).title("Marker"));
 
