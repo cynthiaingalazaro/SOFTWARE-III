@@ -11,12 +11,15 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 public class MapsActivity extends FragmentActivity {
 
     private GoogleMap mMap; // Might be null if Google Play services APK is not available.
     private CameraUpdate mCamera;
+
+    private Marker marker;//cariable para controlar el marcador
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,24 +33,39 @@ public class MapsActivity extends FragmentActivity {
 
     // Metodo para agregar un marcador
     public void addMarker(Location loc){
-        //Toast.makeText(this," loc: "+loc, Toast.LENGTH_SHORT);
-        if(loc == null){
-            //Toast.makeText(this," loc: es null", Toast.LENGTH_SHORT);
-            return;
-        }
-        LatLng position = new LatLng(loc.getLatitude(), loc.getLongitude());
+        LatLng position = new LatLng( 0, 0);
         String title ="Persona espiada";
         String info ="Ubicacion de la persona espiada";
         float color = BitmapDescriptorFactory.HUE_CYAN;
-        mMap.addMarker(new MarkerOptions()
-                        .position(position)     // Posicion del marcador
-                        .title(title)           // Agrega titulo al marcador
-                        .snippet(info)          // Agrega información detalle relacionada con el marcador
-                        .alpha(0.6f)         // Opacidad del icono
-                        //.anchor(dimension1, dimension2)     // Tamaño del icono (alto y ancho)
-                        //.icon(BitmapDescriptorFactory.fromResource(icon)));
-                        .icon(BitmapDescriptorFactory.defaultMarker(color))
+        int zoom = 14;
+        if(loc == null){
+            Toast.makeText(this," loc: es null", Toast.LENGTH_SHORT).show();
+            position =  new LatLng( 0, 0);
+            title = "ES UN NINJA";
+            info ="Se desconoce Ubicacion";
+            color = BitmapDescriptorFactory.HUE_RED;
+            zoom = 1;
+            //return;
+        }else{
+            position = new LatLng(loc.getLatitude(), loc.getLongitude());
+        }
+
+
+        if(marker != null){
+            marker.remove();
+        }
+        marker = mMap.addMarker(new MarkerOptions()
+                            .position(position)     // Posicion del marcador
+                            .title(title)           // Agrega titulo al marcador
+                            .snippet(info)          // Agrega información detalle relacionada con el marcador
+                            .alpha(0.6f)         // Opacidad del icono
+                                    //.anchor(dimension1, dimension2)     // Tamaño del icono (alto y ancho)
+                                    //.icon(BitmapDescriptorFactory.fromResource(icon)));
+                            .icon(BitmapDescriptorFactory.defaultMarker(color))
         );
+        //Camera
+        mCamera = CameraUpdateFactory.newLatLngZoom(position, 14);
+        mMap.animateCamera(mCamera);
     }
 
     @Override
@@ -93,7 +111,7 @@ public class MapsActivity extends FragmentActivity {
     private void setUpMap() {
         mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
 
-        mMap.addMarker(new MarkerOptions().position(new LatLng(0, 0)).title("Marker"));
+        //mMap.addMarker(new MarkerOptions().position(new LatLng(0, 0)).title("Marker"));
 
         //mCamera = CameraUpdateFactory.newLatLngZoom(new LatLng(40.070823, -2.13760), 14);
         //mMap.animateCamera(mCamera);
