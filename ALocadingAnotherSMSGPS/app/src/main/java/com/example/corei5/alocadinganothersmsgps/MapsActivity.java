@@ -1,8 +1,13 @@
 package mapped.wolfox.com.alocadinganothersmsgps;
 
+import android.annotation.TargetApi;
+import android.app.Fragment;
+import android.app.PendingIntent;
 import android.location.Location;
+import android.os.Build;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.telephony.SmsManager;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -23,6 +28,8 @@ public class MapsActivity extends FragmentActivity {
 
     private Marker marker;//cariable para controlar el marcador
 
+    MyLocationServiceListener servicio;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,7 +37,11 @@ public class MapsActivity extends FragmentActivity {
         setUpMapIfNeeded();
 
         //Agrego un marcador
-        addMarker(mMap.getMyLocation());
+        //addMarker(mMap.getMyLocation());
+
+        //
+        servicio = new MyLocationServiceListener(getApplicationContext());
+        addMarker(servicio.getLocation());
     }
 
     // Metodo para agregar un marcador
@@ -86,11 +97,15 @@ public class MapsActivity extends FragmentActivity {
         // define items in menu/option_menu.xml
         switch(item.getItemId()){
             case R.id.MenuOption1:
-                //Enviar mensaje al otro celular Aqui
-                Toast.makeText(MapsActivity.this, "Opcion 1", Toast.LENGTH_LONG).show();
+                //Enviar mensaje al otro celular
+                sendSMS("+931022193","oe ¿On tas?");
+
                 return true;
             case R.id.MenuOption2:
-                Toast.makeText(MapsActivity.this, "Opcion 2", Toast.LENGTH_LONG).show();
+                Toast.makeText(MapsActivity.this, "Unicandome..", Toast.LENGTH_LONG);
+                //addMarker(mMap.getMyLocation());
+                addMarker(servicio.getLocation());
+
                 return true;
             case R.id.MenuOption3:
                 Toast.makeText(MapsActivity.this, "Opcion 3", Toast.LENGTH_LONG).show();
@@ -101,6 +116,15 @@ public class MapsActivity extends FragmentActivity {
 
         }
     }
+
+    //Send SMS
+    //Metodo apra enviar mensajes a otro dispositivo
+    private void sendSMS(String phoneNumber, String message){
+        Toast.makeText(MapsActivity.this, "Enviando mensaje...\n ¿On tas?", Toast.LENGTH_SHORT).show();
+        SmsManager sms = SmsManager.getDefault();
+        sms.sendTextMessage(phoneNumber, null, message, null, null);
+    }
+
 
     // Others methods
     @Override
@@ -157,6 +181,7 @@ public class MapsActivity extends FragmentActivity {
         //mCamera = CameraUpdateFactory.newLatLngZoom(new LatLng(40.070823, -2.13760), 14);
         //mMap.animateCamera(mCamera);
         mMap.setMyLocationEnabled(true);
-
     }
+
+
 }
