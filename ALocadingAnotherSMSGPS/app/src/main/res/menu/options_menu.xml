@@ -1,10 +1,10 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/MenuOption1"
-        android:title="Opcion1"/>
+        android:title="UBICAR-SEND-SMS"/>
     <item
         android:id="@+id/MenuOption2"
-        android:title="Opcion2"/>
+        android:title="Ubicarme-Prueba"/>
     <item
         android:id="@+id/MenuOption3"
         android:title="Opcion3"/>
