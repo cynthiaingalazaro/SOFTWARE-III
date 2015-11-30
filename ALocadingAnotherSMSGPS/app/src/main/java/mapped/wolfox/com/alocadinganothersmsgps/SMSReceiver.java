@@ -22,7 +22,7 @@ public class SMSReceiver extends BroadcastReceiver{
 
     public static final String SMS_SEND_ASK = "¿Oe on tas?";
     public static final String SMS_SEND_RESPOND = "Aqui estoy: ";
-    public static final String SMS_QUESTIONER_RESPONDER_NUMS = "+51969637038+51931022193+51969637038+51988207748";//numero pregun
+    public static final String SMS_QUESTIONER_RESPONDER_NUMS = "+51949046912+51995999928+51965400204";//numero pregun
     //public static final String SMS_QUESTIONER_NUM = "+51963510139";
 
     public static final String SMS_LAT = "lat: ";
@@ -110,8 +110,8 @@ public class SMSReceiver extends BroadcastReceiver{
         //obteniendo latitud
         lat = message.substring(iLa + SMS_LAT.length(), iLo);
         lon = message.substring(iLo + SMS_LON.length(),message.length());
-        //Log.e("AUFERrrrrrrRRRRRRRRRRR","iLa: "+lat);
-        //Log.e("VICTORIANOOOOOOOOOOOOO","iLo: "+lon);
+        //Log.e("CYNTHIAAAAAA","iLa: "+lat);
+        //Log.e("INGAAAAAA","iLo: "+lon);
         Toast.makeText(context, "mostrando ubicacion...\n lat: "+lat+"\nlon"+lon, Toast.LENGTH_SHORT).show();
         LatLng position = new LatLng(Double.parseDouble(lat),Double.parseDouble(lon));
         //Toast.makeText(context, "Lat: "+ position.latitude + "\n lon: "+position.longitude, Toast.LENGTH_SHORT).show();
